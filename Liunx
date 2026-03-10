@@ -1,0 +1,65 @@
+1–10 File & Directory Commands
+
+1. pwd – Current directory
+2. ls – List files (ls -la , ls -l)
+3. cd – Change directory ( cd /opt , cd ..)
+4. mkdir – Create directory
+5. rmdir – Remove empty directory( rmdir test)
+6. touch – Create file (create empty file)
+7. cp – Copy file (cp file1.txt file2.txt)
+8. mv – Move / rename (mv file.txt /opt/)
+9. rm – Delete file (rm file.txt , rm -rf folder)
+10. tree – Show directory structure (tree)
+—-----------------------------------------------------------------------------------------------
+11–20 File Viewing Commands
+
+11. cat file.txt
+12.less file.txt
+13. more file.txt
+14. head -10 file.txt
+15. tail -10 file.txt
+tail -f logfile.log
+16. wc file.txt
+17. sort file.txt
+18.uniq file.txt
+19. cut -d ":" -f1 /etc/passwd
+20 awk '{print $1}' file.txt
+
+—-----------------------------------------------------------
+21–30 Search & Find Commands
+
+21 grep "error" logfile.log
+22 egrep "error|fail" logfile.log
+23 find / -name file.txt
+24 locate file.txt
+25 which java
+26 whereis nginx
+27 diff file1 file2
+28 cmp file1 file2
+29 history
+30 clear
+31–40 Process & System Commands
+31 ps -ef
+32 top
+33 htop
+34 kill 1234
+35 kill -9 1234
+36 pkill java
+37 uptime
+38 free -m
+39 df -h
+40 du -sh *
+—----------------------------------------------------------------------------------------------------------------
+41–50 DevOps Important Commands
+
+41 tar -cvf backup.tar folder
+42 gzip file.txt
+43 zip file.zip file.txt
+44 unzip file.zip
+45 scp file.txt user@server:/opt
+46 rsync -av folder/ backup/
+47 chmod 755 script.sh
+48 chown tomcat:tomcat file.txt
+49 systemctl start nginx
+systemctl status docker
+50 journalctl -u nginx
