@@ -1,0 +1,133 @@
+ 1.Task: Back up a file or directory by copying it with a timestamp.
+#!/bin/bash
+
+SOURCE_DIR="$HOME/Documents"
+BACKUP_DIR="$HOME/backup"
+TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
+
+mkdir -p "$BACKUP_DIR"
+cp -r "$SOURCE_DIR" "$BACKUP_DIR/backup_$TIMESTAMP"
+
+echo "Backup of $SOURCE_DIR completed at $BACKUP_DIR/backup_$TIMESTAMP"
+
+—----------------------------------------------------------------------------------------------------------------------------
+2. Task: Warn if disk usage goes above a threshold.
+#!/bin/bash
+
+THRESHOLD=80
+
+USAGE=$(df / | grep / | awk '{ print $5 }' | sed 's/%//g')
+
+if [ "$USAGE" -gt "$THRESHOLD" ]; then
+    echo "Warning: Disk usage is above $THRESHOLD%."
+else
+    echo "Disk usage is under control: $USAGE%."
+fi
+—----------------------------------------------------------------------------------------------------------------------------
+3. Task: Add a prefix or suffix to all .txt files in a directory.
+#!/bin/bash
+
+PREFIX="archived_"
+
+for file in *.txt; do
+    mv "$file" "${PREFIX}${file}"
+done
+
+echo "Files renamed with prefix '$PREFIX'"
+
+-----------------------------------------------------------------------------------------------------------------------------
+4. Task: Check if a service is running, and restart it if not.
+#!/bin/bash
+
+SERVICE="nginx"
+
+if systemctl is-active --quiet $SERVICE; then
+    echo "$SERVICE is running."
+else
+    echo "$SERVICE is not running. Restarting..."
+    sudo systemctl restart $SERVICE
+fi
+----------------------------------------------------------------------------------------------------------------------------
+5.Task: Disable users inactive for more than 90 days.
+
+#!/bin/bash
+
+INACTIVE_DAYS=90
+
+for user in $(cut -f1 -d: /etc/passwd); do
+    LAST_LOGIN=$(lastlog -u "$user" | awk 'NR==2 {print $4, $5, $6}')
+    if [ -n "$LAST_LOGIN" ]; then
+        # Placeholder logic: Compare with current date
+        echo "User $user last logged in on $LAST_LOGIN"
+    fi
+done
+
+---------------------------------------------------------------------------------------------------------------------------
+6.Task: Parse /var/log/syslog for errors and send an email.
+#!/bin/bash
+
+grep -i "error" /var/log/syslog > error_report.txt
+
+if [ -s error_report.txt ]; then
+    mail -s "Syslog Errors Report" you@example.com < error_report.txt
+fi
+
+-s filename → File exists AND size > 0
+-------------------------------------------------------------------------------------------------------------------------
+7.Task: Pull latest code, build, and restart service.
+#!/bin/bash
+
+cd /home/user/myapp || exit
+
+git pull origin main
+
+npm install
+npm run build
+
+sudo systemctl restart myapp.service
+
+echo "Deployment completed."
+
+--------------------------------------------------------------------------------------------------------------------------
+8. To find files modified in the last 20 days AND remove files older than 20 days,
+
+#!/bin/bash
+
+TARGET_DIR="/path/to/your/files"
+
+echo "Files to keep (last 20 days):"
+find "$TARGET_DIR" -type f -mtime -20
+
+echo "Deleting files older than 20 days..."
+find "$TARGET_DIR" -type f -mtime +20 -exec rm {} \;
+
+echo "Cleanup complete."
+
+
+-mtime -20: Files modified within the last 20 days (i.e., you want to keep these).
+-type f: Only files (not directories).
+-exec rm {} \;: Deletes each matched file.
+
+--------------------------------------------------------------------------------------------------------------------------
+9) shell script that searches for the word "error" in a file and removes only the word "error"
+
+
+#!/bin/bash
+
+# Set the file name
+filename="yourfile.txt"
+
+# Create a backup
+cp "$filename" "${filename}.bak"
+
+# Remove the word 'error' from all lines where it appears
+sed -i 's/error//g' "$filename"
+
+echo "'error' word removed from $filename"
+
+--------------------------------------------------------------------------------------------------------------------------
+10)list service running of linux
+systemctl list-units --type=service --state=running
+
+To list all services
+systemctl list-units --type=service
